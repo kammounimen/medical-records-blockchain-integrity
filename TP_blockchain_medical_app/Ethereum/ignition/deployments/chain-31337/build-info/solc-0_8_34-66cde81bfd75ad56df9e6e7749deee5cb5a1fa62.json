@@ -1,0 +1,49 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_34-66cde81bfd75ad56df9e6e7749deee5cb5a1fa62",
+  "solcVersion": "0.8.34",
+  "solcLongVersion": "0.8.34+commit.80d5c536",
+  "compilerType": "solc",
+  "toolVersions": {
+    "hardhat": "3.17.0"
+  },
+  "userSourceNameMap": {
+    "contracts/MedicalRecord.sol": "project/contracts/MedicalRecord.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "osaka",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode.linkReferences",
+            "evm.bytecode.object",
+            "evm.bytecode.opcodes",
+            "evm.bytecode.sourceMap",
+            "evm.deployedBytecode.immutableReferences",
+            "evm.deployedBytecode.linkReferences",
+            "evm.deployedBytecode.object",
+            "evm.deployedBytecode.opcodes",
+            "evm.deployedBytecode.sourceMap",
+            "evm.methodIdentifiers"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/MedicalRecord.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.19;\r\n\r\n/// @title MedicalRecord\r\n/// @notice Enregistre l'empreinte cryptographique (hash) de dossiers medicaux\r\n///         afin d'en garantir l'integrite, sans stocker les donnees medicales\r\n///         elles-memes sur la blockchain.\r\ncontract MedicalRecord {\r\n\r\n    struct RecordVersion {\r\n        bytes32 hash;\r\n        uint256 timestamp;\r\n    }\r\n\r\n    // patientId => liste des versions enregistrees (historique complet)\r\n    mapping(string => RecordVersion[]) private records;\r\n\r\n    event RecordRegistered(\r\n        string patientId,\r\n        bytes32 hash,\r\n        uint256 timestamp,\r\n        uint256 version\r\n    );\r\n\r\n    /// @notice Enregistre une nouvelle empreinte pour un patient donne\r\n    function registerRecord(string memory patientId, bytes32 hash) public {\r\n        records[patientId].push(RecordVersion(hash, block.timestamp));\r\n        emit RecordRegistered(\r\n            patientId,\r\n            hash,\r\n            block.timestamp,\r\n            records[patientId].length\r\n        );\r\n    }\r\n\r\n    /// @notice Retourne le dernier hash enregistre pour un patient\r\n    function getLastHash(string memory patientId) public view returns (bytes32) {\r\n        uint256 count = records[patientId].length;\r\n        require(count > 0, \"Aucun dossier enregistre pour ce patient\");\r\n        return records[patientId][count - 1].hash;\r\n    }\r\n\r\n    /// @notice Retourne la date d'enregistrement du dernier hash\r\n    function getLastTimestamp(string memory patientId) public view returns (uint256) {\r\n        uint256 count = records[patientId].length;\r\n        require(count > 0, \"Aucun dossier enregistre pour ce patient\");\r\n        return records[patientId][count - 1].timestamp;\r\n    }\r\n\r\n    /// @notice Verifie si un hash correspond au dernier hash enregistre\r\n    function verifyRecord(string memory patientId, bytes32 hashToCheck) public view returns (bool) {\r\n        bytes32 lastHash = getLastHash(patientId);\r\n        return lastHash == hashToCheck;\r\n    }\r\n\r\n    /// @notice Retourne le nombre de versions enregistrees pour un patient\r\n    function getVersionCount(string memory patientId) public view returns (uint256) {\r\n        return records[patientId].length;\r\n    }\r\n\r\n    /// @notice Retourne une version specifique (hash + timestamp) par son index\r\n    function getVersion(string memory patientId, uint256 index)\r\n        public\r\n        view\r\n        returns (bytes32 hash, uint256 timestamp)\r\n    {\r\n        require(index < records[patientId].length, \"Index invalide\");\r\n        RecordVersion memory v = records[patientId][index];\r\n        return (v.hash, v.timestamp);\r\n    }\r\n}\r\n"
+      }
+    }
+  }
+}

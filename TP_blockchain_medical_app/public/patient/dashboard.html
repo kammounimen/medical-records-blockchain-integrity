@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Espace Patient</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">🧑 Espace Patient</div>
+  <div class="user-info">
+    <span id="patientNameTop"></span>
+    <button class="btn btn-secondary btn-small" onclick="openProfileModal()">Modifier</button>
+    <button class="btn btn-secondary btn-small" onclick="logout()">Déconnexion</button>
+  </div>
+</header>
+
+<div class="container">
+  <div class="card">
+    <h2>Mon profil</h2>
+    <p id="profileDetails" style="color:#64748b;">Chargement...</p>
+  </div>
+
+  <div class="card">
+    <h3>📋 Mon dossier médical</h3>
+    <div id="dossierContainer"></div>
+  </div>
+</div>
+
+<div class="modal hidden" id="profileModal" role="dialog" aria-modal="true" aria-labelledby="profileModalTitle">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="profileModalTitle">Modifier mes informations</h2>
+      <button class="modal-close" type="button" onclick="closeProfileModal()" aria-label="Fermer">&times;</button>
+    </div>
+    <form id="profileForm">
+      <label for="profileName">Nom complet</label>
+      <input type="text" id="profileName" required autocomplete="name">
+      <label for="profileEmail">Email</label>
+      <input type="email" id="profileEmail" required autocomplete="email">
+      <div id="profileBirthDateField">
+        <label for="profileBirthDate">Date de naissance</label>
+        <input type="date" id="profileBirthDate">
+      </div>
+      <label for="profilePassword">Nouveau mot de passe</label>
+      <input type="password" id="profilePassword" minlength="6" placeholder="Laisser vide pour conserver l actuel" autocomplete="new-password">
+      <div class="error-msg" id="profileError"></div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" type="button" onclick="closeProfileModal()">Annuler</button>
+        <button class="btn" type="submit">Enregistrer</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="../js/api.js"></script>
+<script src="../js/profile.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

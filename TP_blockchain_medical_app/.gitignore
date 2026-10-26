@@ -1,0 +1,14 @@
+# Base de données SQLite locale
+database.sqlite
+database.sqlite-shm
+database.sqlite-wal
+
+# Variables d'environnement
+.env
+.env.*
+
+# Dépendances Node.js
+node_modules/
+
+# Logs
+*.log

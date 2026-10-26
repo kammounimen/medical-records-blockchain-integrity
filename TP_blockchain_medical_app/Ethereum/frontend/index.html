@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>MedicalRecord - Interface de test</title>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.17.0/dist/ethers.umd.min.js"></script>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: 40px auto; }
+    section { border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; border-radius: 8px; }
+    input { width: 100%; padding: 6px; margin: 4px 0; box-sizing: border-box; }
+    button { padding: 8px 16px; margin-top: 6px; cursor: pointer; }
+    #status { color: #555; font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <h1>Interface MedicalRecord</h1>
+
+  <section>
+    <h3>1. Connexion</h3>
+    <button id="connectBtn">Connecter MetaMask</button>
+    <p>Compte : <b id="account">-</b></p>
+    <p>Réseau : <b id="network">-</b></p>
+  </section>
+
+  <section>
+  <h3>2. Enregistrer un hash</h3>
+  <input id="patientId" placeholder="ID patient (ex: patient001)">
+
+  <label style="font-size:0.85em">Contenu du dossier (texte libre, pour calculer un hash de démo) :</label>
+  <input id="recordContent" placeholder="ex: Diagnostic: grippe, traitement: repos">
+  <button id="computeHashBtn" type="button">Calculer le hash</button>
+
+  <label style="font-size:0.85em">Hash (bytes32) :</label>
+  <input id="hashInput" placeholder="0x... (généré automatiquement ou saisi manuellement)">
+  <button id="registerBtn">Enregistrer sur la blockchain</button>
+</section>
+
+  <section>
+    <h3>3. Lire le dernier hash</h3>
+    <input id="patientIdRead" placeholder="ID patient">
+    <button id="readBtn">Lire</button>
+    <p>Dernier hash : <b id="lastHash">-</b></p>
+  </section>
+
+  <section>
+    <h3>4. Vérifier l'intégrité</h3>
+    <input id="patientIdVerify" placeholder="ID patient">
+    <input id="hashVerify" placeholder="Hash à vérifier">
+    <button id="verifyBtn">Vérifier</button>
+    <p>Résultat : <b id="verifyResult">-</b></p>
+  </section>
+
+  <p id="status"></p>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

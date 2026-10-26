@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dossier patient</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">🩺 Espace Médecin</div>
+  <div class="user-info">
+    <span id="doctorName"></span>
+    <button class="btn btn-secondary btn-small" onclick="logout()">Déconnexion</button>
+  </div>
+</header>
+
+<div class="container">
+  <button class="link-btn" onclick="window.location.href='dashboard.html'">← Retour à la liste des patients</button>
+
+  <div class="card" id="patientInfoCard">
+    <h2 id="patientName">Chargement...</h2>
+    <p id="patientDetails" style="color:#64748b; font-size:14px;"></p>
+  </div>
+  <div class="card" id="blockchainPanel">
+    <h3>⛓️ Blockchain</h3>
+    <button class="btn" id="btnConnect">Connecter MetaMask</button>
+    <p>Compte : <strong id="account">-</strong></p>
+    <p>Réseau : <strong id="networkName">-</strong></p>
+    <p>Chain ID : <strong id="chainId">-</strong></p>
+    <p id="bcStatus" style="font-weight:600;"></p>
+
+    <h4>État blockchain du dossier</h4>
+    <p>Nombre de versions : <strong id="versionCount">-</strong></p>
+    <p>Dernier hash : <strong id="lastHash" style="word-break:break-all;">-</strong></p>
+
+    <button class="btn" id="btnSave">Enregistrer le dossier sur la blockchain</button>
+    <button class="btn btn-secondary" id="btnVerify">Vérifier l'intégrité</button>
+    <p id="verifyResult" style="font-weight:700; font-size:18px;"></p>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <h3>➕ Nouvelle consultation</h3>
+      <form id="consultationForm">
+        <label>Motif</label>
+        <input type="text" id="reason" placeholder="Ex: Douleur abdominale" required>
+        <label>Notes</label>
+        <textarea id="notes" placeholder="Observations, examen clinique..."></textarea>
+        <button type="submit" class="btn">Ajouter la consultation</button>
+        <div class="error-msg" id="consultationError"></div>
+      </form>
+    </div>
+
+    <div class="card">
+      <h3>Ajouter à une consultation existante</h3>
+      <label>Consultation cible</label>
+      <select id="targetConsultation"></select>
+
+      <div style="margin-top:16px;">
+        <strong>Diagnostic</strong>
+        <form id="diagnosticForm">
+          <textarea id="diagnosticDescription" placeholder="Description du diagnostic" required></textarea>
+          <button type="submit" class="btn">Ajouter le diagnostic</button>
+        </form>
+      </div>
+
+      <div style="margin-top:20px;">
+        <strong>Prescription</strong>
+        <form id="prescriptionForm">
+          <label>Médicament</label>
+          <input type="text" id="medication" required placeholder="Ex: Paracétamol">
+          <label>Dosage</label>
+          <input type="text" id="dosage" placeholder="Ex: 500mg, 3x/jour">
+          <label>Durée</label>
+          <input type="text" id="duration" placeholder="Ex: 5 jours">
+          <label>Instructions</label>
+          <textarea id="instructions" placeholder="Instructions complementaires"></textarea>
+          <button type="submit" class="btn">Ajouter la prescription</button>
+        </form>
+      </div>
+      <div class="error-msg" id="subFormError"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📋 Historique médical</h3>
+    <div id="historyContainer"></div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
+
+<script src="../js/api.js"></script>
+<script src="js/patient.js"></script>
+<script src="js/blockchain.js"></script>
+</body>
+</html>
